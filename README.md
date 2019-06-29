@@ -11,7 +11,7 @@ from hexcover.util import hexagon_coverage
 c = Point(0.0, 0.0)
 coverage = hexagon_coverage(c, 10)
 
-# coverage is a List of seven polygons. The first entry is the central polygon.
+# coverage is a list of seven polygons. The first entry is the central polygon.
 # Subsequent entries begin directly above the central polygon, and proceed clockwise.
 ```
 
