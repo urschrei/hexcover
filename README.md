@@ -21,3 +21,4 @@ coverage = hexagon_coverage(c, 10)
 [The Blue Oak Model License 1.0](LICENSE.md)
 
 # DOI
+[![DOI](https://zenodo.org/badge/194419900.svg)](https://zenodo.org/badge/latestdoi/194419900)
