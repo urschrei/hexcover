@@ -14,6 +14,9 @@ coverage = hexagon_coverage(c, 10)
 # coverage is a List of seven polygons. The first entry is the central polygon.
 # Subsequent entries begin directly above the central polygon, and proceed clockwise.
 ```
+
+There's also an example [notebook](hexcover.ipynb)
+
 # Requirements
 `Shapely` >= 1.6.3
 
