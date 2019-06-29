@@ -4,6 +4,11 @@
 setup.py
 
 Created by Stephan Hügel on 2019-06-29
+
+This file is part of hexcover.
+
+Copyright (c) 2019 Stephan Hügel
+
 """
 
 import os

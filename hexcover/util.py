@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-hex_coords.py
+util.py
 
 Created by Stephan Hügel on 2019-06-28
 
@@ -8,9 +8,10 @@ This file is part of hexcover.
 
 Copyright (c) 2019 Stephan Hügel
 
-Version 1.0.0
+Blue Oak Model License Version 1.0.0
 
-Purpose This license gives everyone as much permission to work with this
+Purpose
+This license gives everyone as much permission to work with this
 software as possible, while protecting contributors from liability.
 
 Acceptance
