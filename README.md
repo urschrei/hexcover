@@ -15,7 +15,7 @@ coverage = hexagon_coverage(c, 10)
 # Subsequent entries begin directly above the central polygon, and proceed clockwise.
 ```
 # Requirements
-`Shapely` >= 1.6.3`
+`Shapely` >= 1.6.3
 
 # License
 [The Blue Oak Model License 1.0](LICENSE.md)
