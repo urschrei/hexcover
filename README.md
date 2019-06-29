@@ -15,7 +15,7 @@ coverage = hexagon_coverage(c, 10)
 # Subsequent entries begin directly above the central polygon, and proceed clockwise.
 ```
 
-There's also an example [notebook](hexcover.ipynb)
+There's also an example [notebook](hexcover.ipynb), and a sample output [GeoJSON file](coverage.geojson) showing the result of covering the [Crystal Palace Transmitting Station]() with 100-metre hexagons.
 
 # Requirements
 `Shapely` >= 1.6.3
