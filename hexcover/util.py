@@ -51,7 +51,7 @@ damages related to this software or this license, under any kind of legal claim.
 """
 
 __author__ = u"Stephan Hügel <shugel@tcd.ie>"
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 from shapely.geometry import Polygon
 from shapely.affinity import translate
@@ -91,11 +91,13 @@ def hexagon_coverage(centre, size):
     height = math.sqrt(3) * size
     horizontal_distance = width * 0.75
     vertical_distance = height * 0.5
-    # first hex is directly above central_polygon, progresses clockwise
-    p0 = translate(cp, 0, vertical_distance * -2)
-    p1 = translate(cp, horizontal_distance, vertical_distance)
-    p2 = translate(cp, horizontal_distance, -vertical_distance)
-    p3 = translate(cp, 0, vertical_distance * 2)
-    p4 = translate(cp, -horizontal_distance, vertical_distance)
-    p5 = translate(cp, -horizontal_distance, -vertical_distance)
-    return [cp, p0, p1, p2, p3, p4, p5]
+    # second hex is directly above central_polygon, progresses clockwise
+    return [
+        cp,
+        translate(cp, 0, vertical_distance * 2),
+        translate(cp, horizontal_distance, vertical_distance),
+        translate(cp, horizontal_distance, -vertical_distance),
+        translate(cp, 0, vertical_distance * -2),
+        translate(cp, -horizontal_distance, vertical_distance),
+        translate(cp, -horizontal_distance, -vertical_distance),
+    ]
