@@ -1,7 +1,11 @@
 # Hexcover
 A small utility package which calculates a regular hexagonal tiling for an area, given a centroid as a Shapely [Point](https://shapely.readthedocs.io/en/latest/manual.html#Point), and a side length.
 
-# Example
+# Installation
+`Hexcover` is available on PyPI:  
+`pip install hexcover`
+
+# Usage
 ```python
 
 from shapely.geometry import Point
@@ -24,7 +28,8 @@ The returned `namedtuple` has seven properties:
 - `bottomleft`
 - `topleft`
 
-There's also an example [notebook](hexcover.ipynb), and a sample output [GeoJSON file](coverage.geojson) showing the result of covering the [Crystal Palace Transmitting Station]() with 100-metre hexagons.
+## Examples
+There's an example [notebook](hexcover.ipynb), and a sample output [GeoJSON file](coverage.geojson) showing the result of covering the [Crystal Palace Transmitting Station]() with 100-metre hexagons.
 
 # Requirements
 `Shapely` >= 1.6.3
