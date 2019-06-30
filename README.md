@@ -18,7 +18,7 @@ coverage = hexagon_coverage(c, 10)
 # coverage is a namedtuple of seven polygons. The first entry is the central polygon.
 # Subsequent entries begin directly above the central polygon, and proceed clockwise.
 ```
-The returned `namedtuple` has seven properties:
+The returned `namedtuple` has seven fields:
 
 - `centre`
 - `top`
