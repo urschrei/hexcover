@@ -11,9 +11,18 @@ from hexcover.util import hexagon_coverage
 c = Point(0.0, 0.0)
 coverage = hexagon_coverage(c, 10)
 
-# coverage is a tuple of seven polygons. The first entry is the central polygon.
+# coverage is a namedtuple of seven polygons. The first entry is the central polygon.
 # Subsequent entries begin directly above the central polygon, and proceed clockwise.
 ```
+The returned `namedtuple` has seven properties:
+
+- `centre`
+- `top`
+- `topright`
+- `bottomright`
+- `bottom`
+- `bottomleft`
+- `topleft`
 
 There's also an example [notebook](hexcover.ipynb), and a sample output [GeoJSON file](coverage.geojson) showing the result of covering the [Crystal Palace Transmitting Station]() with 100-metre hexagons.
 
