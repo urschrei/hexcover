@@ -69,7 +69,7 @@ def _flat_hex_coords(centre, size, i):
     """ Return the point coordinate of a flat-topped regular hexagon.
     points are returned in counter-clockwise order as i increases
     the first coordinate (i=0) will be:
-    centre.x + length, centre.y
+    centre.x + size, centre.y
 
     """
     angle_deg = 60 * i
