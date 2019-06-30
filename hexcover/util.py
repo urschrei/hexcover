@@ -88,7 +88,7 @@ def _flat_hex_polygon(centre, size):
 def hexagon_coverage(centre, size):
     """ Tile an area having a Shapely Point centroid _centre_ with regular flat-topped
     hexagonal polygons having side-length _size_.
-    The returned list has seven entries:
+    The returned namedtuple has seven entries:
     0 is the central polygon, 1 - 6 are surrounding polygons, beginning directly
     above 0, progressing clockwise.
 
