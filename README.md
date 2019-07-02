@@ -29,7 +29,7 @@ The returned `namedtuple` has seven fields:
 - `topleft`
 
 ## Examples
-There's an example [notebook](hexcover.ipynb), and a sample output [GeoJSON file](coverage.geojson) showing the result of covering the [Crystal Palace Transmitting Station]() with 100-metre hexagons.
+There's an example [notebook](hexcover.ipynb), and a sample output [GeoJSON file](coverage.geojson) showing the result of covering the [Crystal Palace Transmitting Station](https://en.wikipedia.org/wiki/Crystal_Palace_transmitting_station) with 100-metre hexagons.
 
 # Requirements
 `Shapely` >= 1.6.3
