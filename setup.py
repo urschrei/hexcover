@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 setup.py
 
@@ -18,7 +16,7 @@ from setuptools import setup, find_packages, Distribution
 
 
 def read(*names, **kwargs):
-    with io.open(
+    with open(
         os.path.join(os.path.dirname(__file__), *names),
         encoding=kwargs.get("encoding", "utf8"),
     ) as fp:

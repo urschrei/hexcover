@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 util.py
 
@@ -50,8 +49,8 @@ damages related to this software or this license, under any kind of legal claim.
 
 """
 
-__author__ = u"Stephan Hügel <shugel@tcd.ie>"
-__version__ = "0.4.0"
+__author__ = "Stephan Hügel <shugel@tcd.ie>"
+__version__ = "0.5.0"
 
 from shapely.geometry import Polygon
 from shapely.affinity import translate
@@ -66,7 +65,7 @@ Hexagons = namedtuple(
 
 
 def _flat_hex_coords(centre, size, i):
-    """ Return the point coordinate of a flat-topped regular hexagon.
+    """Return the point coordinate of a flat-topped regular hexagon.
     points are returned in counter-clockwise order as i increases
     the first coordinate (i=0) will be:
     centre.x + size, centre.y
@@ -81,12 +80,12 @@ def _flat_hex_coords(centre, size, i):
 
 
 def _flat_hex_polygon(centre, size):
-    """ Return a flat-topped regular hexagonal Polygon, given a centroid Point and side length """
+    """Return a flat-topped regular hexagonal Polygon, given a centroid Point and side length"""
     return Polygon([_flat_hex_coords(centre, size, i) for i in range(6)])
 
 
 def hexagon_coverage(centre, size):
-    """ Tile an area having a Shapely Point centroid _centre_ with regular flat-topped
+    """Tile an area having a Shapely Point centroid _centre_ with regular flat-topped
     hexagonal polygons having side-length _size_.
     The returned namedtuple has seven entries:
     0 is the central polygon, 1 - 6 are surrounding polygons, beginning directly
