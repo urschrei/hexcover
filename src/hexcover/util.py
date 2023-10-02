@@ -50,7 +50,6 @@ damages related to this software or this license, under any kind of legal claim.
 """
 
 __author__ = "Stephan Hügel <shugel@tcd.ie>"
-__version__ = "0.5.0"
 
 from shapely.geometry import Polygon
 from shapely.affinity import translate
@@ -80,7 +79,8 @@ def _flat_hex_coords(centre, size, i):
 
 
 def _flat_hex_polygon(centre, size):
-    """Return a flat-topped regular hexagonal Polygon, given a centroid Point and side length"""
+    """Return a flat-topped regular hexagonal Polygon, given a centroid Point and side
+    length"""
     return Polygon([_flat_hex_coords(centre, size, i) for i in range(6)])
 
 
@@ -90,6 +90,9 @@ def hexagon_coverage(centre, size):
     The returned namedtuple has seven entries:
     0 is the central polygon, 1 - 6 are surrounding polygons, beginning directly
     above 0, progressing clockwise.
+
+    A projected coordinate system (PCS) is assumed for accurate coverage:
+    Don't give a centre in WGS84 coordinates.
 
     """
     cp = _flat_hex_polygon(centre, size)

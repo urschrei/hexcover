@@ -31,6 +31,9 @@ The returned `namedtuple` has seven fields:
 ## Examples
 There's an example [notebook](hexcover.ipynb), and a sample output [GeoJSON file](coverage.geojson) showing the result of covering the [Crystal Palace Transmitting Station](https://en.wikipedia.org/wiki/Crystal_Palace_transmitting_station) with 100-metre hexagons.
 
+# Input Coordinates
+A **projected** coordinate system must be used. Don't give input in e.g. WGS84
+
 # Requirements
 `Shapely` >= 1.6.3
 

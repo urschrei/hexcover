@@ -1,0 +1,89 @@
+name: Build wheel, release and publish on new tag
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, 3.10.9, 3.11]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install wheel
+        pip install .[test] --use-pep517
+    - name: Test with pytest
+      run: |
+        pytest
+
+  make_sdist:
+    name: Make SDist
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Optional, use if you use setuptools_scm
+        submodules: true  # Optional, use if you have submodules
+
+    - name: Build SDist
+      run: pipx run build --sdist
+
+    - uses: actions/upload-artifact@v3
+      with:
+        path: dist/*.tar.gz
+
+  release_artifacts:
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    name: Release repaired and tested wheels
+    needs: build
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Optional, use if you use setuptools_scm
+        submodules: false  # Optional, use if you have submodules
+
+    - name: Build wheels
+      run: |
+        pip install pip -U
+        pip install setuptools -U
+        pwd
+        ls -la
+        pip wheel . -w dist --no-deps --use-pep517
+
+    - uses: actions/upload-artifact@v3
+      with:
+        path: dist/*.whl
+
+    - name: Download compressed artifacts
+      id: download
+      uses: actions/download-artifact@v3
+      with:
+        path: ./artifacts
+
+    - name: Create release and upload wheels
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        artifacts: "${{ steps.download.outputs.download-path }}/**/*.whl,${{ steps.download.outputs.download-path }}/**/*.gz,${{ steps.download.outputs.download-path }}/**/*.zip"
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: PyPI Publish
+      uses: pypa/gh-action-pypi-publish@v1.8.10
+      with:
+        packages-dir: ${{ steps.download.outputs.download-path }}/**/
