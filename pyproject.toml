@@ -49,7 +49,7 @@ minversion = "6.2.2"
 addopts = [
     "--import-mode=importlib",
 ]
-testpaths = []
+testpaths = ["tests"]
 
 [tool.setuptools_scm]
 write_to = "src/_version.py"
