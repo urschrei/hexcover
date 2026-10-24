@@ -3,59 +3,48 @@ name: Build wheel, release and publish on new tag
 on: [push, pull_request]
 
 jobs:
-  build:
-
+  test:
+    name: Test on Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8, 3.9, 3.10.9, 3.11]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+    - uses: actions/checkout@v7
+
+    - name: Set up uv and Python ${{ matrix.python-version }}
+      uses: astral-sh/setup-uv@v10.3.2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install wheel
-        pip install .[test] --use-pep517
+
     - name: Test with pytest
-      run: |
-        pytest
-    - name: Build wheel
-      run: |
-        python -m pip install --upgrade pip
-        pip wheel . -w dist --no-deps --use-pep517
+      run: uv run --locked pytest
 
-    - uses: actions/upload-artifact@v3
-      name: Upload wheel as artifact
-      with:
-        name: wheels
-        path: |
-          ./dist/*.whl
-
-  make_sdist:
-    name: Make SDist
+  build:
+    name: Build wheel and sdist
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
       with:
-        fetch-depth: 0  # Optional, use if you use setuptools_scm
-        submodules: true  # Optional, use if you have submodules
+        fetch-depth: 0  # setuptools-scm reads the version from the tags
 
-    - name: Build SDist
-      run: pipx run build --sdist
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v10.3.2
 
-    - uses: actions/upload-artifact@v3
+    - name: Build wheel and sdist
+      run: uv build
+
+    - uses: actions/upload-artifact@v7
+      name: Upload wheel and sdist as artifact
       with:
-        path: dist/*.tar.gz
+        name: dist
+        path: dist/
 
   release_artifacts:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    name: Release repaired and tested wheels
-    needs: build
+    name: Release and publish tested wheel and sdist
+    needs: [test, build]
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -64,25 +53,25 @@ jobs:
       contents: write
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
-    - name: Download compressed artifacts
-      id: download
-      uses: actions/download-artifact@v3
+    - name: Download wheel and sdist
+      uses: actions/download-artifact@v8
       with:
-        path: ./artifacts
+        name: dist
+        path: dist/
 
-    - name: 'List downloaded files'
-      run: ls ${{ steps.download.outputs.download-path }}/**/*.*
+    - name: List downloaded files
+      run: ls -l dist/
 
-    - name: Create release and upload wheels
+    - name: Create release and upload wheel and sdist
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        artifacts: "${{ steps.download.outputs.download-path }}/**/*.whl,${{ steps.download.outputs.download-path }}/**/*.gz,${{ steps.download.outputs.download-path }}/**/*.so,${{ steps.download.outputs.download-path }}/**/*.dylib,${{ steps.download.outputs.download-path }}/**/*.lib,${{ steps.download.outputs.download-path }}/**/*.dll"
+        artifacts: "dist/*.whl,dist/*.tar.gz"
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: PyPI Publish
-      uses: pypa/gh-action-pypi-publish@v1.8.11
+      uses: pypa/gh-action-pypi-publish@v1.14.3
       with:
-        packages-dir: ${{ steps.download.outputs.download-path }}/**/
+        packages-dir: dist/
