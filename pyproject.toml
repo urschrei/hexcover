@@ -29,8 +29,8 @@ classifiers = [
 Repository = "https://github.com/urschrei/hexcover"
 Tracker = "https://github.com/urschrei/hexcover/issues"
 
-[project.optional-dependencies]
-test = [
+[dependency-groups]
+dev = [
     "pytest >= 7.4.2",
 ]
 
