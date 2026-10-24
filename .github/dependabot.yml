@@ -4,13 +4,26 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    ignore:
-      # Optional: Official actions have moving tags like v1;
-      # if you use those, you don't need updates.
-      - dependency-name: "actions/*"
+    groups:
+      github-actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      github-actions-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
 
-  - package-ecosystem: pip
+  - package-ecosystem: "uv"
     directory: "/"
     schedule:
-      interval: daily
-    open-pull-requests-limit: 10
+      interval: "weekly"
+    groups:
+      python:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      python-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
